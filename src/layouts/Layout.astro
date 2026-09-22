@@ -1,0 +1,138 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { getLangFromUrl } from '../i18n/ui';
+import '../styles/global.css';
+import { Hud } from '../islands/Hud';
+import { PcScene } from '../islands/PcScene';
+import { AudioController } from '../islands/AudioController';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Jonathan Hamonangan Saragih - Retro Pixel Portfolio" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={import.meta.env.BASE_URL + "favicon.svg"} />
+    <meta name="theme-color" content="#F2F7A0" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <!-- 3D PC Island (Persisted across navigation) -->
+    <div class="fixed inset-0 z-0 opacity-50 pointer-events-none">
+      <PcScene client:only="react" transition:persist />
+    </div>
+
+    <!-- Audio Controller (Persisted) -->
+    <AudioController client:only="react" transition:persist />
+
+    <!-- HUD / Header Island -->
+    <Hud client:only="react" transition:persist />
+
+    <!-- The actual content overlay -->
+    <main class="relative z-10 w-full h-[calc(100dvh-120px)] mt-[60px] pointer-events-none flex items-center justify-center">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="fixed bottom-0 w-full h-[60px] z-50 flex items-center justify-between px-8 bg-[var(--color-sun)] border-t-4 border-[var(--color-ink)] text-xs text-[var(--color-ink)] font-bold pointer-events-auto">
+      <div>&copy; 2026 Jonathan H.S.</div>
+      <div>Frontend | Hardware | Data | Video</div>
+      <div class="flex gap-4">
+        <a href="mailto:saragihjonathan80@gmail.com" class="hover:text-[var(--color-blue-deep)]">Email</a>
+        <a href="https://linkedin.com/in/jonathansaragih/" target="_blank" class="hover:text-[var(--color-blue-deep)]">LinkedIn</a>
+      </div>
+    </footer>
+    
+    <noscript>
+      <div class="p-8 bg-[var(--color-sun)] text-[var(--color-ink)] h-full w-full overflow-auto pointer-events-auto">
+        <h1>Jonathan Hamonangan Saragih</h1>
+        <p>Frontend Developer | Hardware Technician | Data Entry | Video Editor</p>
+        <p>Projects: KANTIN IBU IDA, RAKIT PC ONLINE</p>
+        <p>Contact: saragihjonathan80@gmail.com</p>
+      </div>
+    </noscript>
+
+    <script>
+      import { activeScene, setScene } from '../stores/gameState';
+      
+      const scenes = ['hero', 'about', 'skills', 'projects', 'experience', 'certificates', 'contact'] as const;
+      let lastWheelTime = 0;
+      let touchStartY = 0;
+
+      const navigate = (direction: 1 | -1) => {
+        const currentId = activeScene.get();
+        const currentIndex = scenes.indexOf(currentId as any);
+        if (currentIndex === -1) return;
+
+        let nextIndex = currentIndex + direction;
+        if (nextIndex < 0) nextIndex = 0;
+        if (nextIndex >= scenes.length) nextIndex = scenes.length - 1;
+
+        if (nextIndex !== currentIndex) {
+          const nextScene = scenes[nextIndex];
+          setScene(nextScene);
+          window.location.hash = nextScene;
+        }
+      };
+
+      document.addEventListener('astro:page-load', () => {
+        const handleWheel = (e: WheelEvent) => {
+          const now = Date.now();
+          if (now - lastWheelTime < 500) return; // Debounce
+          
+          if (Math.abs(e.deltaY) > 20) {
+            navigate(e.deltaY > 0 ? 1 : -1);
+            lastWheelTime = now;
+          }
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+          if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+            navigate(1);
+          } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+            navigate(-1);
+          }
+        };
+
+        const handleTouchStart = (e: TouchEvent) => {
+          touchStartY = e.touches[0].clientY;
+        };
+
+        const handleTouchEnd = (e: TouchEvent) => {
+          const touchEndY = e.changedTouches[0].clientY;
+          const deltaY = touchStartY - touchEndY;
+          
+          if (Math.abs(deltaY) > 50) {
+            navigate(deltaY > 0 ? 1 : -1);
+          }
+        };
+
+        window.addEventListener('wheel', handleWheel, { passive: true });
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleTouchEnd);
+        
+        // Cleanup not strictly necessary for simple events in Astro if we overwrite,
+        // but Astro page-load runs every navigation so we shouldn't attach multiple.
+        // Wait, window listeners persist across astro:page-load!
+        // We should manage it:
+        (window as any)._retroCleanup?.();
+        (window as any)._retroCleanup = () => {
+          window.removeEventListener('wheel', handleWheel);
+          window.removeEventListener('keydown', handleKeyDown);
+          window.removeEventListener('touchstart', handleTouchStart);
+          window.removeEventListener('touchend', handleTouchEnd);
+        };
+      });
+    </script>
+  </body>
+</html>

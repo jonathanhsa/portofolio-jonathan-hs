@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sun: #F2F7A0;
+  --color-blue-deep: #2373F4;
+  --color-blue-mid: #578EF5;
+  --color-cyan: #65D0F4;
+  --color-ink: #10214B;
+  --color-white: #FFFFFF;
+}
+
+:root {
+  --px: 4px;
+}
+
+@media (max-width: 768px) {
+  :root { --px: 3px; }
+}
+
+@media (max-width: 480px) {
+  :root { --px: 2px; }
+}
+
+@font-face {
+  font-family: 'Eight Bit Dragon';
+  /* Assume woff2 is supplied by owner. Give a fallback so it doesn't fail parsing */
+  src: url('/fonts/EightBitDragon.woff2') format('woff2');
+  font-display: swap;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* No scroll rule */
+  width: 100vw;
+  height: 100dvh;
+  font-family: 'Eight Bit Dragon', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: var(--color-sun);
+  color: var(--color-ink);
+  image-rendering: pixelated; /* Retro look */
+  -webkit-font-smoothing: none;
+}
+
+/* Base pixel UI elements will go here or in their own component CSS */
+.pixel-corners {
+  clip-path: polygon(
+    0 var(--px), var(--px) var(--px), var(--px) 0,
+    calc(100% - var(--px)) 0, calc(100% - var(--px)) var(--px), 100% var(--px),
+    100% calc(100% - var(--px)), calc(100% - var(--px)) calc(100% - var(--px)), calc(100% - var(--px)) 100%,
+    var(--px) 100%, var(--px) calc(100% - var(--px)), 0 calc(100% - var(--px))
+  );
+}
+
+.pixel-shadow {
+  box-shadow: calc(var(--px) * 2) calc(var(--px) * 2) 0 var(--color-blue-mid);
+}
+
+.pixel-focus:focus-visible {
+  outline: var(--px) dashed var(--color-blue-deep);
+  outline-offset: var(--px);
+}

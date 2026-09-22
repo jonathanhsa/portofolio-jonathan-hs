@@ -1,0 +1,53 @@
+---
+import SceneContainer from './SceneContainer.astro';
+---
+
+<SceneContainer id="experience">
+  <div class="flex flex-col h-full justify-center items-center w-full max-w-5xl mx-auto p-8 gap-8">
+    <h2 class="text-4xl text-[var(--color-blue-deep)] font-bold text-center w-full border-b-4 border-[var(--color-ink)] pb-4">EXPERIENCE LOG</h2>
+    
+    <div class="relative w-full mt-8">
+      <!-- Horizontal Timeline Base -->
+      <div class="absolute top-[160px] left-0 w-full h-1 bg-[var(--color-ink)]"></div>
+      
+      <div class="flex justify-between items-end w-full relative z-10 px-8">
+        
+        <!-- Experience Node 1 -->
+        <div class="flex flex-col items-center gap-4 w-64">
+          <!-- Card -->
+          <div class="w-full bg-white border-4 border-[var(--color-ink)] p-4 pixel-shadow hover:-translate-y-2 cursor-pointer transition-transform group">
+            <h3 class="font-bold text-sm mb-2 border-b-2 border-dashed border-gray-400 pb-1">TODO: Job 1</h3>
+            <div class="w-full h-16 border-2 border-[var(--color-ink)] flex items-center justify-center relative overflow-hidden bg-gray-100">
+              <div class="absolute inset-0 border-[var(--color-ink)]" style="border-width: 1px; background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px)), linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px));"></div>
+            </div>
+          </div>
+          <!-- Arrow marker -->
+          <div class="w-0 h-0 border-l-[12px] border-l-[var(--color-ink)] border-y-[10px] border-y-transparent mt-2"></div>
+        </div>
+
+        <!-- Experience Node 2 -->
+        <div class="flex flex-col items-center gap-4 w-64">
+          <div class="w-full bg-white border-4 border-[var(--color-ink)] p-4 pixel-shadow hover:-translate-y-2 cursor-pointer transition-transform group">
+            <h3 class="font-bold text-sm mb-2 border-b-2 border-dashed border-gray-400 pb-1">TODO: Job 2</h3>
+            <div class="w-full h-16 border-2 border-[var(--color-ink)] flex items-center justify-center relative overflow-hidden bg-gray-100">
+              <div class="absolute inset-0 border-[var(--color-ink)]" style="border-width: 1px; background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px)), linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px));"></div>
+            </div>
+          </div>
+          <div class="w-0 h-0 border-l-[12px] border-l-[var(--color-ink)] border-y-[10px] border-y-transparent mt-2"></div>
+        </div>
+
+        <!-- Experience Node 3 (Education) -->
+        <div class="flex flex-col items-center gap-4 w-64">
+          <div class="w-full bg-white border-4 border-[var(--color-ink)] p-4 pixel-shadow hover:-translate-y-2 cursor-pointer transition-transform group">
+            <h3 class="font-bold text-sm mb-2 border-b-2 border-dashed border-gray-400 pb-1">UBSI</h3>
+            <div class="w-full h-16 border-2 border-[var(--color-ink)] flex items-center justify-center relative overflow-hidden bg-gray-100">
+              <div class="absolute inset-0 border-[var(--color-ink)]" style="border-width: 1px; background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px)), linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px));"></div>
+            </div>
+          </div>
+          <div class="w-0 h-0 border-l-[12px] border-l-[var(--color-ink)] border-y-[10px] border-y-transparent mt-2"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</SceneContainer>

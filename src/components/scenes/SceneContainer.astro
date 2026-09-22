@@ -1,0 +1,49 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div id={`scene-${id}`} class="scene-container hidden w-full h-full absolute top-0 left-0 items-center justify-center pointer-events-auto" data-scene-id={id}>
+  <slot />
+</div>
+
+<script>
+  import { activeScene } from '../../stores/gameState';
+
+  document.addEventListener('astro:page-load', () => {
+    // Unsubscribe previous if exists to avoid memory leaks across transitions
+    // Wait, with View Transitions, modules are evaluated once and kept in memory.
+    // The subscribe function returns an unsubscribe callback.
+    // We can just define a global unsubscriber.
+    
+    // Instead, since activeScene is a store, we can just run the logic:
+    const updateVisibility = (sceneId: string) => {
+      const containers = document.querySelectorAll('.scene-container');
+      containers.forEach((el) => {
+        const isVisible = el.getAttribute('data-scene-id') === sceneId;
+        if (isVisible) {
+          el.classList.remove('hidden');
+          el.classList.add('flex');
+          el.removeAttribute('inert');
+          el.removeAttribute('aria-hidden');
+        } else {
+          el.classList.add('hidden');
+          el.classList.remove('flex');
+          el.setAttribute('inert', '');
+          el.setAttribute('aria-hidden', 'true');
+        }
+      });
+    };
+
+    activeScene.subscribe(updateVisibility);
+    
+    // Check initial hash
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1) as any;
+      activeScene.set(hash);
+    }
+  });
+</script>

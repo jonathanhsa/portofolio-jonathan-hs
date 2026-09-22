@@ -1,0 +1,26 @@
+---
+import SceneContainer from './SceneContainer.astro';
+---
+
+<SceneContainer id="about">
+  <div class="pixel-corners bg-[var(--color-sun)] border-4 border-[var(--color-blue-deep)] p-6 pixel-shadow max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden flex flex-col">
+    <div class="flex-1 overflow-hidden p-6 flex flex-col">
+    <h2 class="text-3xl text-[var(--color-blue-deep)] mb-4 uppercase">Player Card</h2>
+    <div class="space-y-4 text-base leading-relaxed overflow-y-auto">
+      <p>
+        I am <span class="font-bold text-[var(--color-blue-deep)]">Jonathan Hamonangan Saragih</span>, an Information Systems student at Universitas Bina Sarana Informatika (UBSI).
+      </p>
+      <p>
+        My goal is to build accessible, creative, and robust web applications while leveraging my hardware and data management background.
+      </p>
+      <div class="mt-4 border-t-2 border-dashed border-[var(--color-ink)] pt-4">
+        <ul class="list-disc pl-6 space-y-2">
+          <li><strong>Location:</strong> TODO(owner): City</li>
+          <li><strong>Education:</strong> UBSI, Information Systems</li>
+          <li><strong>Focus:</strong> Frontend, Hardware, Data, Video</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</SceneContainer>

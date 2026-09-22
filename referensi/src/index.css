@@ -1,0 +1,372 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: #0a0a1a;
+  --foreground: #e8e8f0;
+  --card: #12122a;
+  --card-foreground: #e8e8f0;
+  --primary: #00ffcc;
+  --primary-foreground: #0a0a1a;
+  --secondary: #1a1a3a;
+  --secondary-foreground: #e8e8f0;
+  --muted: #1e1e40;
+  --muted-foreground: #8888cc;
+  --accent: #ff00aa;
+  --accent-foreground: #ffffff;
+  --border: #3333aa;
+  --ring: #00ffcc;
+  --radius: 0px;
+
+  --pixel-cyan: #00ffcc;
+  --pixel-magenta: #ff00aa;
+  --pixel-yellow: #ffee00;
+  --pixel-green: #00ff44;
+  --pixel-orange: #ff6600;
+  --pixel-purple: #aa00ff;
+  --pixel-red: #ff2244;
+  --pixel-blue: #0044ff;
+}
+
+* {
+  image-rendering: pixelated;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  overflow-x: hidden;
+}
+
+/* Scrollbar hide */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a1a; }
+::-webkit-scrollbar-thumb { background: #3333aa; }
+::-webkit-scrollbar-thumb:hover { background: #00ffcc; }
+
+/* Scanline overlay */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+}
+
+/* CRT flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.96; }
+  94% { opacity: 1; }
+  96% { opacity: 0.98; }
+}
+
+.crt {
+  animation: flicker 8s infinite;
+}
+
+/* Pixel border style */
+.pixel-border {
+  border: 4px solid var(--pixel-cyan);
+  box-shadow:
+    inset -4px -4px 0 #007755,
+    inset 4px 4px 0 #aaffee,
+    4px 4px 0 rgba(0,255,204,0.3);
+}
+
+.pixel-border-magenta {
+  border: 4px solid var(--pixel-magenta);
+  box-shadow:
+    inset -4px -4px 0 #880055,
+    inset 4px 4px 0 #ff88dd,
+    4px 4px 0 rgba(255,0,170,0.3);
+}
+
+.pixel-border-yellow {
+  border: 4px solid var(--pixel-yellow);
+  box-shadow:
+    inset -4px -4px 0 #886600,
+    inset 4px 4px 0 #ffff88,
+    4px 4px 0 rgba(255,238,0,0.3);
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor::after {
+  content: '█';
+  animation: blink 1s step-start infinite;
+  color: var(--pixel-cyan);
+}
+
+/* Pixel button */
+.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 12px 20px;
+  background: var(--pixel-cyan);
+  color: #0a0a1a;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    4px 4px 0 #007755,
+    -2px -2px 0 #aaffee;
+  transition: transform 0.05s, box-shadow 0.05s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pixel-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    6px 6px 0 #007755,
+    -2px -2px 0 #aaffee;
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    2px 2px 0 #007755,
+    0 0 0 #aaffee;
+}
+
+.pixel-btn-magenta {
+  background: var(--pixel-magenta);
+  color: #ffffff;
+  box-shadow:
+    4px 4px 0 #880055,
+    -2px -2px 0 #ff88dd;
+}
+
+.pixel-btn-magenta:hover {
+  box-shadow:
+    6px 6px 0 #880055,
+    -2px -2px 0 #ff88dd;
+}
+
+/* HP Bar */
+.hp-bar {
+  height: 16px;
+  background: #1a0a0a;
+  border: 3px solid #884444;
+  box-shadow: inset 0 0 0 2px #220a0a;
+  position: relative;
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff2244 0%, #ff6644 50%, #ffaa44 100%);
+  box-shadow: none;
+  transition: width 1.5s ease;
+  image-rendering: auto;
+}
+
+/* Skill bar */
+.skill-bar {
+  height: 16px;
+  background: #0a1a0a;
+  border: 3px solid #224422;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    #00ff44 0px,
+    #00ff44 12px,
+    #00cc33 12px,
+    #00cc33 16px
+  );
+  transition: width 1.5s ease 0.3s;
+}
+
+/* Dither pattern */
+.dither {
+  background-image:
+    radial-gradient(circle, rgba(0,255,204,0.15) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-text {
+  animation: marquee 20s linear infinite;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* Float animation for hero sprite */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.float { animation: float 3s ease-in-out infinite; }
+
+/* Glitch */
+@keyframes glitch {
+  0%, 90%, 100% {
+    text-shadow: 2px 0 #ff00aa, -2px 0 #00ffcc;
+    clip-path: none;
+  }
+  91% {
+    text-shadow: 6px 0 #ff00aa, -6px 0 #00ffcc;
+    transform: translate(-2px, 0);
+  }
+  93% {
+    text-shadow: -4px 0 #ff00aa, 4px 0 #00ffcc;
+    transform: translate(2px, 0);
+  }
+  95% {
+    text-shadow: 2px 0 #ff00aa, -2px 0 #00ffcc;
+    transform: translate(0, 0);
+  }
+}
+
+.glitch {
+  animation: glitch 4s infinite;
+}
+
+/* Star twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* Dialogue box */
+.dialogue-box {
+  background: #0a0a1a;
+  border: 4px solid var(--pixel-cyan);
+  box-shadow:
+    inset 0 0 0 2px #0a0a1a,
+    inset 0 0 0 4px #007755,
+    4px 4px 0 rgba(0,0,0,0.8);
+  padding: 24px;
+  position: relative;
+}
+
+.dialogue-box::before {
+  content: '▶';
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  color: var(--pixel-cyan);
+  animation: blink 0.8s step-start infinite;
+  font-size: 16px;
+}
+
+/* Pixel heading */
+.pixel-heading {
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Section label */
+.section-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--pixel-magenta);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Grid dithering bg */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(51,51,170,0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51,51,170,0.2) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Star field */
+.star-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Pixel tag */
+.pixel-tag {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 4px 8px;
+  background: #1a1a3a;
+  border: 2px solid var(--pixel-purple);
+  color: var(--pixel-purple);
+  display: inline-block;
+}
+
+/* Nav active */
+.nav-item {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  transition: color 0.1s;
+  cursor: pointer;
+  text-decoration: none;
+  color: #8888cc;
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--pixel-cyan);
+  text-shadow: 0 0 8px var(--pixel-cyan);
+}
+
+/* Glow */
+.glow-cyan { text-shadow: 0 0 20px var(--pixel-cyan), 0 0 40px rgba(0,255,204,0.4); }
+.glow-magenta { text-shadow: 0 0 20px var(--pixel-magenta), 0 0 40px rgba(255,0,170,0.4); }
+.glow-yellow { text-shadow: 0 0 20px var(--pixel-yellow), 0 0 40px rgba(255,238,0,0.4); }
+
+/* Screen transition */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in { animation: slideIn 0.6s ease forwards; }
+
+/* Responsive */
+@media (max-width: 1000px) {
+  body { font-size: 18px; }
+  .pixel-heading { font-size: clamp(12px, 3vw, 28px) !important; }
+}

@@ -1,0 +1,481 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text);
+  --color-primary: var(--gold);
+  --color-primary-foreground: var(--bg);
+  --color-secondary: var(--stone);
+  --color-secondary-foreground: var(--text);
+  --color-muted: var(--surface-light);
+  --color-muted-foreground: var(--text-muted);
+  --color-accent: var(--gold-light);
+  --color-accent-foreground: var(--bg);
+  --color-border: var(--stone);
+  --color-ring: var(--gold);
+}
+
+:root {
+  /* Background */
+  --bg: #17151C;
+
+  /* Surface */
+  --surface: #2A2020;
+  --surface-light: #3A2D29;
+
+  /* Typography */
+  --text: #E8DFC8;
+  --text-muted: #A99F89;
+
+  /* Medieval */
+  --parchment: #D8C18D;
+  --stone: #68666B;
+
+  /* Nature */
+  --forest-dark: #344B35;
+  --forest: #557A45;
+
+  /* Gold */
+  --gold-dark: #8A6A2F;
+  --gold: #C49A45;
+  --gold-light: #E0BC63;
+
+  /* RPG Status */
+  --hp: #A94442;
+  --mana: #496A9B;
+  
+  --radius: 0px;
+}
+
+* {
+  image-rendering: pixelated;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(23, 21, 28, 0.85), rgba(23, 21, 28, 0.85)), url('../assets/backround.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  color: var(--text);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  overflow-x: hidden;
+}
+
+/* Scrollbar hide */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); border-left: 2px solid var(--stone); }
+::-webkit-scrollbar-thumb { background: var(--surface-light); border-left: 2px solid var(--stone); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+/* Scanline overlay */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+}
+
+/* Vignette / Dark Corners */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(circle, transparent 50%, rgba(23, 21, 28, 0.4) 100%);
+}
+
+/* CRT flicker / Torch flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.96; }
+  94% { opacity: 1; }
+  96% { opacity: 0.98; }
+}
+
+.crt {
+  animation: flicker 8s infinite;
+}
+
+/* Pixel border style - Medieval */
+.pixel-border {
+  border: 4px solid var(--stone);
+  box-shadow:
+    inset -4px -4px 0 var(--bg),
+    inset 4px 4px 0 var(--surface-light),
+    4px 4px 0 rgba(0,0,0,0.5);
+  background: var(--surface);
+}
+
+.pixel-border-gold {
+  border: 4px solid var(--gold);
+  box-shadow:
+    inset -4px -4px 0 var(--gold-dark),
+    inset 4px 4px 0 var(--gold-light),
+    4px 4px 0 rgba(0,0,0,0.5);
+  background: var(--surface);
+}
+
+.pixel-border-parchment {
+  border: 4px solid var(--gold-dark);
+  box-shadow:
+    inset -4px -4px 0 rgba(0,0,0,0.2),
+    inset 4px 4px 0 #FFF6D9,
+    4px 4px 0 rgba(0,0,0,0.5);
+  background: var(--parchment);
+  color: var(--surface);
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor::after {
+  content: '█';
+  animation: blink 1s step-start infinite;
+  color: var(--gold);
+}
+
+/* Pixel button - Medieval */
+.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 12px 20px;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    4px 4px 0 var(--gold-dark),
+    -2px -2px 0 var(--gold-light);
+  transition: transform 0.05s, box-shadow 0.05s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pixel-btn:hover {
+  transform: translate(-2px, -2px);
+  background: var(--gold-light);
+  box-shadow:
+    6px 6px 0 var(--gold-dark),
+    -2px -2px 0 #FFF6D9;
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  background: var(--gold);
+  box-shadow:
+    2px 2px 0 var(--gold-dark),
+    0 0 0 var(--gold-light);
+}
+
+.pixel-btn-parchment {
+  background: var(--parchment);
+  color: var(--surface);
+  box-shadow:
+    4px 4px 0 var(--gold-dark),
+    -2px -2px 0 #FFF6D9;
+}
+
+.pixel-btn-parchment:hover {
+  box-shadow:
+    6px 6px 0 var(--gold-dark),
+    -2px -2px 0 #FFF6D9;
+}
+
+/* HP Bar */
+.hp-bar {
+  height: 16px;
+  background: var(--bg);
+  border: 3px solid var(--stone);
+  box-shadow: inset 0 0 0 2px var(--surface-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--hp) 0%, #D9534F 50%, var(--hp) 100%);
+  box-shadow: none;
+  transition: width 1.5s ease;
+  image-rendering: auto;
+}
+
+/* Skill bar */
+.skill-bar {
+  height: 16px;
+  background: var(--bg);
+  border: 3px solid var(--stone);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--gold) 0px,
+    var(--gold) 12px,
+    var(--gold-dark) 12px,
+    var(--gold-dark) 16px
+  );
+  transition: width 1.5s ease 0.3s;
+}
+
+/* Dither pattern */
+.dither {
+  background-image:
+    radial-gradient(circle, rgba(216,193,141,0.1) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-text {
+  animation: marquee 20s linear infinite;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* Float animation for hero sprite */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.float { animation: float 3s ease-in-out infinite; }
+
+/* Star twinkle / Dust */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.1; }
+}
+
+/* Dialogue box */
+.dialogue-box {
+  background: var(--surface);
+  border: 4px solid var(--stone);
+  box-shadow:
+    inset 0 0 0 2px var(--surface-light),
+    inset 0 0 0 4px var(--bg),
+    4px 4px 0 rgba(0,0,0,0.8);
+  padding: 24px;
+  position: relative;
+}
+
+.dialogue-box::before {
+  content: '▼';
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  color: var(--gold);
+  animation: blink 0.8s step-start infinite;
+  font-size: 16px;
+}
+
+/* Pixel heading */
+.pixel-heading {
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Section label */
+.section-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Grid dithering bg */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(216,193,141,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(216,193,141,0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Star field / Dust */
+.star-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Pixel tag */
+.pixel-tag {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 4px 8px;
+  background: var(--surface-light);
+  border: 2px solid var(--stone);
+  color: var(--text);
+  display: inline-block;
+}
+
+/* Nav active */
+.nav-item {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  transition: color 0.1s;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-muted);
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(196,154,69,0.5);
+}
+
+/* Glow - Subdued for RPG */
+.glow-gold { text-shadow: 0 0 10px rgba(196,154,69,0.5), 0 0 20px rgba(196,154,69,0.3); }
+
+/* Screen transition */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in { animation: slideIn 0.6s ease forwards; }
+
+/* Responsive */
+@media (max-width: 1000px) {
+  body { font-size: 18px; }
+  .pixel-heading { font-size: clamp(12px, 3vw, 28px) !important; }
+}
+
+/* --- LOADING SEQUENCE --- */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #3A699B; /* Sky color based on mana */
+  background-image: linear-gradient(180deg, #3A699B 0%, #1a3c6b 100%);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 1s cubic-bezier(0.7, 0, 0.3, 1), transform 1.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.loading-screen.zooming {
+  transform: scale(30);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pixel-cloud {
+  position: absolute;
+  pointer-events: none;
+  animation: cloudBob infinite;
+  animation-timing-function: steps(8, end);
+  transform-origin: center center;
+  image-rendering: pixelated;
+  will-change: transform;
+}
+
+.pixel-cloud.reverse {
+  animation-direction: reverse;
+}
+
+@keyframes cloudBob {
+  0%   { transform: translate(0, 0); }
+  12%  { transform: translate(2%, -4%); }
+  25%  { transform: translate(5%, 1%); }
+  37%  { transform: translate(3%, 5%); }
+  50%  { transform: translate(-2%, 3%); }
+  62%  { transform: translate(-5%, -2%); }
+  75%  { transform: translate(-3%, -5%); }
+  87%  { transform: translate(1%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+.app-content {
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1.5s ease;
+  transform-origin: center center;
+}
+
+.app-content.entering {
+  transform: scale(0.6) translateY(-50px);
+  opacity: 0;
+}
+
+.app-content.entered {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* --- VINES & LEAVES (15fps pixel effects) --- */
+@keyframes vineSwayLeft {
+  0%, 100% { transform: skewX(0deg); }
+  50% { transform: skewX(2deg); }
+}
+
+@keyframes vineSwayRight {
+  0%, 100% { transform: scaleX(-1) skewX(0deg); }
+  50% { transform: scaleX(-1) skewX(-2deg); }
+}
+
+.vine-left {
+  animation: vineSwayLeft 4s infinite;
+  animation-timing-function: steps(60, end); /* 4s * 15fps = 60 steps */
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.vine-right {
+  animation: vineSwayRight 4s infinite;
+  animation-timing-function: steps(60, end);
+  transform-origin: center top;
+  will-change: transform;
+}
+
+@keyframes leafFall {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  5%   { opacity: 1; }
+  25%  { transform: translate(40px, 25vh) rotate(45deg); }
+  50%  { transform: translate(-30px, 50vh) rotate(90deg); }
+  75%  { transform: translate(40px, 75vh) rotate(135deg); }
+  95%  { opacity: 1; }
+  100% { transform: translate(-20px, 105vh) rotate(180deg); opacity: 0; }
+}
+
+.pixel-leaf {
+  will-change: transform, opacity;
+}
+
+/* Torch Lighting */
+@keyframes pulseLight {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  100% { transform: scale(1.05); opacity: 0.9; }
+}
+
+.torch-light {
+  animation: pulseLight 0.15s infinite alternate;
+}

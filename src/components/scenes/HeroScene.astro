@@ -1,0 +1,47 @@
+---
+import SceneContainer from './SceneContainer.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<SceneContainer id="hero">
+  <div class="flex items-center justify-center w-full h-full p-8 gap-12 max-w-4xl mx-auto">
+    
+    <!-- Photo Box -->
+    <div class="relative w-64 h-80 bg-white border-4 border-[var(--color-ink)] flex items-center justify-center pixel-shadow shrink-0">
+      <!-- Photo Corners (Tape) -->
+      <div class="absolute -top-2 -left-2 w-8 h-8 border-t-8 border-l-8 border-gray-800 rotate-[-10deg]"></div>
+      <div class="absolute -top-2 -right-2 w-8 h-8 border-t-8 border-r-8 border-gray-800 rotate-[10deg]"></div>
+      <div class="absolute -bottom-2 -left-2 w-8 h-8 border-b-8 border-l-8 border-gray-800 rotate-[10deg]"></div>
+      <div class="absolute -bottom-2 -right-2 w-8 h-8 border-b-8 border-r-8 border-gray-800 rotate-[-10deg]"></div>
+      
+      <!-- Placeholder Silhouette -->
+      <div class="text-[120px] leading-none opacity-20">👤</div>
+    </div>
+
+    <!-- Text Box -->
+    <div class="flex flex-col gap-6">
+      <div class="border-b-4 border-[var(--color-ink)] pb-2">
+        <h1 class="text-4xl font-bold text-[var(--color-blue-deep)] tracking-wide">JONATHAN H.S.</h1>
+      </div>
+      <div class="border-b-4 border-[var(--color-ink)] pb-2">
+        <p class="text-xl">Frontend Developer</p>
+      </div>
+      <div class="border-b-4 border-[var(--color-ink)] pb-2">
+        <p class="text-xl">Hardware Tech | Data Entry</p>
+      </div>
+      <div class="border-b-4 border-[var(--color-ink)] pb-2">
+        <a 
+          href={import.meta.env.BASE_URL + "docs/CV.pdf"} 
+          download
+          class="inline-block bg-[var(--color-blue-deep)] text-white px-4 py-2 pixel-corners pixel-shadow hover:translate-y-[var(--px)] transition-transform"
+        >
+          {t('hero.downloadCv')}
+        </a>
+      </div>
+    </div>
+    
+  </div>
+</SceneContainer>

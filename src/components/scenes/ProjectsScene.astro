@@ -1,0 +1,51 @@
+---
+import SceneContainer from './SceneContainer.astro';
+---
+
+<SceneContainer id="projects">
+  <div class="flex flex-col h-full justify-center items-center w-full max-w-5xl mx-auto p-8 gap-8">
+    <h2 class="text-4xl text-[var(--color-blue-deep)] font-bold text-center w-full border-b-4 border-[var(--color-ink)] pb-4">PROJECTS</h2>
+    
+    <div class="flex flex-row justify-center items-center gap-8 w-full">
+      <!-- Card 1 -->
+      <div class="w-48 h-72 bg-white border-4 border-[var(--color-ink)] pixel-shadow flex flex-col p-4 hover:-translate-y-2 cursor-pointer transition-transform group">
+        <div class="w-full h-32 border-4 border-[var(--color-ink)] flex items-center justify-center relative overflow-hidden bg-gray-100">
+          <div class="absolute inset-0 border-[var(--color-ink)]" style="border-width: 1px; background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px)), linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px));"></div>
+        </div>
+        <div class="mt-4 border-b-4 border-dotted border-gray-400 pb-2">
+          <h3 class="font-bold text-center text-sm">KANTIN IBU IDA</h3>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="w-48 h-72 bg-white border-4 border-[var(--color-ink)] pixel-shadow flex flex-col p-4 hover:-translate-y-2 cursor-pointer transition-transform group">
+        <div class="w-full h-32 border-4 border-[var(--color-ink)] flex items-center justify-center relative overflow-hidden bg-gray-100">
+          <div class="absolute inset-0 border-[var(--color-ink)]" style="border-width: 1px; background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px)), linear-gradient(to top right, transparent calc(50% - 1px), var(--color-ink), transparent calc(50% + 1px));"></div>
+        </div>
+        <div class="mt-4 border-b-4 border-dotted border-gray-400 pb-2">
+          <h3 class="font-bold text-center text-sm">RAKIT PC ONLINE</h3>
+        </div>
+      </div>
+
+      <!-- Card 3 (Placeholder) -->
+      <div class="w-48 h-72 bg-gray-100 border-4 border-dashed border-gray-400 flex flex-col p-4 opacity-50">
+        <div class="w-full h-32 border-4 border-dashed border-gray-400 flex items-center justify-center">
+          <span class="text-xl">?</span>
+        </div>
+        <div class="mt-4 border-b-4 border-dotted border-gray-400 pb-2">
+          <h3 class="font-bold text-center text-sm text-gray-500">TODO</h3>
+        </div>
+      </div>
+      
+      <!-- Card 4 (Placeholder) -->
+      <div class="w-48 h-72 bg-gray-100 border-4 border-dashed border-gray-400 flex flex-col p-4 opacity-50">
+        <div class="w-full h-32 border-4 border-dashed border-gray-400 flex items-center justify-center">
+          <span class="text-xl">?</span>
+        </div>
+        <div class="mt-4 border-b-4 border-dotted border-gray-400 pb-2">
+          <h3 class="font-bold text-center text-sm text-gray-500">TODO</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</SceneContainer>
