@@ -1056,7 +1056,7 @@ function LoadingScreen({ zooming, onStart }: { zooming: boolean, onStart: () => 
 
       <div style={{ position: 'relative', zIndex: 100, textAlign: 'center' }}>
         <h1 className="pixel-heading" style={{ color: 'var(--text)', fontSize: 'clamp(24px, 5vw, 48px)', marginBottom: 40, textShadow: '4px 4px 0 var(--bg)' }}>
-          PORTFOLIO OS
+          WELCOME TO MY JOURNEY
         </h1>
         
         {progress < 100 ? (
